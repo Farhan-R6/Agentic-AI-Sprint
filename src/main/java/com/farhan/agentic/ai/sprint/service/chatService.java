@@ -1,0 +1,21 @@
+package com.farhan.agentic.ai.sprint.service;
+
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.stereotype.Service;
+
+@Service
+public class chatService {
+
+    private final ChatClient chatClient;
+
+    public chatService(ChatClient.Builder builder) {
+        this.chatClient = builder.build();
+    }
+
+    public String ask(String prompt) {
+        return chatClient.prompt()
+                .user(prompt)
+                .call()
+                .content();
+    }
+}
