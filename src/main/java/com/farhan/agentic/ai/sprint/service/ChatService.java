@@ -4,11 +4,11 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
 @Service
-public class chatService {
+public class ChatService {
 
     private final ChatClient chatClient;
 
-    public chatService(ChatClient.Builder builder) {
+    public ChatService(ChatClient.Builder builder) {
         this.chatClient = builder.build();
     }
 
