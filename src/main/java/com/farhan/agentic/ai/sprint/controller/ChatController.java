@@ -1,7 +1,6 @@
 package com.farhan.agentic.ai.sprint.controller;
 
 import com.farhan.agentic.ai.sprint.service.ChatService;
-import com.farhan.agentic.ai.sprint.service.chatService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
