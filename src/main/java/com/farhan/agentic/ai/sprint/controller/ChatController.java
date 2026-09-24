@@ -1,15 +1,15 @@
 package com.farhan.agentic.ai.sprint.controller;
 
-import com.farhan.agentic.ai.sprint.service.chatService;
+import com.farhan.agentic.ai.sprint.service.ChatService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-public class chatController {
+public class ChatController {
 
-    private final chatService chatService;
+    private final ChatService chatService;
 
-    public chatController(chatService chatService) {
+    public ChatController(ChatService chatService) {
         this.chatService = chatService;
     }
 
