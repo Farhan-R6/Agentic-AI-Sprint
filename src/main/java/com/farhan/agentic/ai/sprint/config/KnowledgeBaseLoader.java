@@ -1,4 +1,4 @@
-package com.farhan.agentic.ai.sprint.shared;
+package com.farhan.agentic.ai.sprint.config;
 
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.VectorStore;
