@@ -21,7 +21,7 @@ public class ChatClientConfig {
                         .searchRequest(
                                 SearchRequest.builder()
                                 .topK(5)
-                                .similarityThreshold(0.5)
+                                .similarityThreshold(0.7)
                                 .build())
                         .build()
                         )

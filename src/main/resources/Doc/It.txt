@@ -1,0 +1,16 @@
+IT Support Knowledge Base
+
+Password Reset:
+Users can reset passwords through the self-service portal or by contacting the IT Service Desk.
+
+Laptop Issues:
+Restart the device before submitting a support ticket.
+
+Software Installation:
+Only approved software may be installed on company devices.
+
+VPN Access:
+Remote employees must use the company VPN to access internal resources.
+
+Security:
+Multi-factor authentication (MFA) is required for all company accounts.
