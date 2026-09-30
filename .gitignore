@@ -34,3 +34,4 @@ build/
 
 ### secrets ###
 .env
+src/main/resources/Doc/resume.pdf
