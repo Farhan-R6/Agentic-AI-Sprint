@@ -28,4 +28,9 @@ public class VectorStoreConfig {
     VectorStore policyVectorStore(EmbeddingModel embeddingModel) {
         return SimpleVectorStore.builder(embeddingModel).build();
     }
+
+    @Bean
+    VectorStore resumeVectorStore(EmbeddingModel embeddingModel) {
+        return SimpleVectorStore.builder(embeddingModel).build();
+    }
 }
