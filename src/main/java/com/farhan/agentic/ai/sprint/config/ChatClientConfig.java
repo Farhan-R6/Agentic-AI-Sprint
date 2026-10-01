@@ -6,6 +6,7 @@ import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvi
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,15 +14,21 @@ import org.springframework.context.annotation.Configuration;
 public class ChatClientConfig {
 
     @Bean
-    public ChatClient chatClient(ChatClient.Builder builder, VectorStore vectorStore, ChatMemory chatMemory) {
+    public ChatClient chatClient(ChatClient.Builder builder, @Qualifier("resumeVectorStore")VectorStore vectorStore, ChatMemory chatMemory) {
         return builder.
-                defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build(),
+                defaultSystem("""
+                        You are a recruiting assistant. Use only the resume excerpts provided.
+                        List each candidate who matches the question, using the name as written
+                        in the resume, and explain briefly which skills or experience match.
+                        If no candidate matches, say so clearly. Do not invent candidates or skills.
+                        """)
+                .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build(),
 
                 QuestionAnswerAdvisor.builder(vectorStore)
                         .searchRequest(
                                 SearchRequest.builder()
                                 .topK(5)
-                                .similarityThreshold(0.7)
+                                .similarityThreshold(0.5)
                                 .build())
                         .build()
                         )

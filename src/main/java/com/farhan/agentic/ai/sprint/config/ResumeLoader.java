@@ -16,7 +16,7 @@ import java.util.List;
 @Configuration
 public class ResumeLoader {
 
-    //@Bean
+    @Bean
     CommandLineRunner loadResumeChunkKnowledge(@Qualifier("resumeVectorStore") VectorStore resumeVectorStore) {
         return args -> {
 
@@ -31,12 +31,6 @@ public class ResumeLoader {
             resumeVectorStore.add(chunks);
 
             System.out.println("Resume Loaded: " + chunks.size() + " chunks");
-
-            List<Document> results = resumeVectorStore.similaritySearch("Farhan Rahman");
-            results.forEach(
-                    document ->
-                            System.out.println(
-                                    document.getMetadata().get("filename") + "-> " + document.getText()));
         };
     }
 }

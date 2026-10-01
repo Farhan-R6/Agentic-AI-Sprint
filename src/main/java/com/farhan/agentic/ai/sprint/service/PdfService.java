@@ -1,5 +1,7 @@
 package com.farhan.agentic.ai.sprint.service;
 
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.pdf.PagePdfDocumentReader;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
@@ -12,14 +14,18 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class PdfService {
 
     private final VectorStore vectorStore;
+    private final ChatClient chatClient;
 
-    public PdfService(@Qualifier("resumeVectorStore") VectorStore vectorStore) {
+    public PdfService(@Qualifier("resumeVectorStore")VectorStore vectorStore,
+                      @Qualifier("chatClient")ChatClient chatClient) {
         this.vectorStore = vectorStore;
+        this.chatClient = chatClient;
     }
 
     public String uploadPdf(MultipartFile file) {
@@ -36,7 +42,7 @@ public class PdfService {
         PagePdfDocumentReader reader = new PagePdfDocumentReader(resource);
         List<Document> pages = reader.get();
 
-        pages.forEach(page -> page.getMetadata().put("filename", file.getOriginalFilename()));
+        pages.forEach(page -> page.getMetadata().put("filename", Objects.requireNonNull(file.getOriginalFilename())));
 
         TokenTextSplitter splitter = TokenTextSplitter.builder().build();
         List<Document> chunks = splitter.apply(pages);
@@ -44,5 +50,15 @@ public class PdfService {
         vectorStore.add(chunks);
 
         return "Uploaded " + chunks.size() + " chunks";
+    }
+
+    public String search(String conversationId, String query) {
+
+         return chatClient.prompt()
+                .user(query)
+                .advisors(advisor -> advisor.param(ChatMemory.CONVERSATION_ID, conversationId))
+                .call()
+                .content();
+
     }
 }
